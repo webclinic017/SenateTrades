@@ -1,5 +1,3 @@
-# add variable for days since trade (filed - traded)
-
 import pandas as pd 
 from requests_html import HTMLSession
 from lxml import html 
