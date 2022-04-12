@@ -1,1 +1,1 @@
-# Congressional-Algo-Trading
+# Senate Trading Tracker
