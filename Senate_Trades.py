@@ -3,10 +3,13 @@
 import pandas as pd 
 from requests_html import HTMLSession
 from lxml import html 
-from datetime import date
+from datetime import date,datetime
 
 today = date.today()
 today_sub = '2022-04-08'
+today_sub_dt = datetime.strptime(
+    today_sub, '%Y-%m-%d'
+).date()
 
 def fetchSession(url):
     session = HTMLSession()
