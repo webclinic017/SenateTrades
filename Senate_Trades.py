@@ -72,12 +72,13 @@ def scrapeAllTradesToday():
 def determineLargeTrades(all_trades):
     large_trades = []
     for t in all_trades:
-        if t['value'][1] > 15001:
+        if t['value'][1] > 50001:
             large_trades.append(
                  {
                 'trade' : t['trade'],
                 'trade type' : t['trade type'],
                 'value' : t['value'],
+                'file date' : t['file date'],
                 'senator' :t['senator']
                 }
             )
@@ -86,7 +87,7 @@ def determineLargeTrades(all_trades):
 def main():
     all_trades = scrapeAllTradesToday()
     large_trades = determineLargeTrades(all_trades)
-    with open('daily_trades.txt', 'w') as f:
+    with open('data/daily_trades.txt', 'w') as f:
         for t in large_trades:
             for (key,item) in t.items():
                 f.write(
@@ -95,6 +96,7 @@ def main():
                     )
                 )
             f.write('\n')
+    print('complete')
 
 if __name__ == "__main__":
     main()
