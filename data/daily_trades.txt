@@ -1,0 +1,30 @@
+trade : Humacyte, Inc. - Common Stock [HUMA]
+trade type : Purchase
+value : [15001, 50000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
+trade : Microsoft Corporation - Common Stock Option Type: Short Sale Strike price: $265.00 Expires: 10/21/2022 [MSFT]
+trade type : Sale (Full)
+value : [15001, 50000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
+trade : ChannelAdvisor Corporation Common Stock [ECOM]
+trade type : Purchase
+value : [15001, 50000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
+trade : Nu Holdings Ltd. Class A Ordinary Shares [NU]
+trade type : Purchase
+value : [15001, 50000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
+trade : ChannelAdvisor Corporation Common Stock [ECOM]
+trade type : Purchase
+value : [50001, 100000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
+trade : ARKK Option Type: Short Sale Strike price: $65.00 Expires: 09/16/2022
+trade type : Sale (Full)
+value : [15001, 50000]
+senator : Thomas H Tuberville [Tuberville, Tommy]
+
