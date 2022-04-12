@@ -44,7 +44,7 @@ def scrapeAllTradesToday():
     n = len(trades)
     all_trades = []
     l1_head = [
-        'file date', 'trade', 'senator'
+        'trade date', 'file date', 'trade', 'senator'
     ]
     l2_head = [
         'trade type', 'value'
@@ -55,19 +55,24 @@ def scrapeAllTradesToday():
             trade = []
             l1_elements = trades[i].find('td')
             l2_elements = trades[i+1].find('td')[:-1]
-            for h,e in zip(l1_head, l1_elements):
+            file_date, trade_date = l1_elements[0].text.split('\n')
+            trade_snip = l1_elements[1].text
+            senator = l1_elements[2].text
+            l1_cleaned = [
+                trade_date,file_date,trade_snip,senator
+            ]
+            for h,e in zip(l1_head, l1_cleaned):
                 trade.append(h)
-                trade.append(e.text)
+                trade.append(e)
             for h,e in zip(l2_head, l2_elements):
                 trade.append(h)
                 trade.append(e.text)
-            trade[1] = trade[1][:10]
             # today_sub used #
-            if str(today_sub) != trade[1]:
+            if str(today_sub) != trade[3]:
                 current = False
                 break
-            trade[7] = trade[7].split('\n', 1)[0]
-            trade[9] = value_to_ints(trade[9])
+            trade[9] = trade[9].split('\n', 1)[0]
+            trade[11] = value_to_ints(trade[11])
             trade = arr_to_dict(trade)
             all_trades.append(trade)
     return all_trades
@@ -82,6 +87,7 @@ def determineLargeTrades(all_trades):
                 'trade type' : t['trade type'],
                 'value' : t['value'],
                 'file date' : t['file date'],
+                'trade date' : t['trade date'],
                 'senator' :t['senator']
                 }
             )
