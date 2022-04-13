@@ -5,6 +5,7 @@ from datetime import date,datetime
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import sys
 
 today = date.today()
 today_sub = '2022-04-08'
@@ -41,7 +42,12 @@ def value_to_ints(value):
 
 def scrapeAllTradesToday():
     r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
-    trades = getTrades(r)
+    # if website is down
+    try:
+        trades = getTrades(r)
+    except IndexError:
+        print('website may be down. quitting.')
+        sys.exit(1)
     n = len(trades)
     all_trades = []
     l1_head = [
