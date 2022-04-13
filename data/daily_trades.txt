@@ -1,7 +1,6 @@
-trade : ChannelAdvisor Corporation Common Stock [ECOM]
-trade type : Purchase
-value : [50001, 100000]
-file date : 2022-04-08
-trade date : 2022-03-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
+Trade : ChannelAdvisor Corporation Common Stock [ECOM]
+Trade Type : Purchase
+Value : $50,001 to $100,000
+Trade Date : 2022-03-08 (35 days ago)
+Senator : Thomas H Tuberville [Tuberville, Tommy]
 
