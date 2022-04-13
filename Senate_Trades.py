@@ -79,14 +79,25 @@ def determineLargeTrades(all_trades):
     large_trades = []
     for t in all_trades:
         if t['value'][1] > 50001:
+            # clean up data for presenation
+            trade_date = str(t['trade date']) + ' (' + str((
+                today - datetime.strptime(
+                    t['trade date'], '%Y-%m-%d'
+                ).date()
+            )).split(',')[0] + ' ago)'
+
+            value_string = '$' + (
+                "{:,}".format(t['value'][0])
+            ) + ' to $' + (
+                "{:,}".format(t['value'][1])
+            )
             large_trades.append(
                  {
-                'trade' : t['trade'],
-                'trade type' : t['trade type'],
-                'value' : t['value'],
-                'file date' : t['file date'],
-                'trade date' : t['trade date'],
-                'senator' :t['senator']
+                'Trade' : t['trade'],
+                'Trade Type' : t['trade type'],
+                'Value' : value_string,
+                'Trade Date' : trade_date,
+                'Senator' : t['senator']
                 }
             )
     return large_trades
@@ -103,7 +114,7 @@ def main():
                     )
                 )
             f.write('\n')
-    print('complete')
+    print('trade scrape complete.')
 
 if __name__ == "__main__":
     main()
