@@ -86,6 +86,7 @@ def scrapeAllTradesToday():
 
 def determineLargeTrades(all_trades):
     large_trades = []
+    # refine parameters. condsider buy/sell cases?
     for t in all_trades:
         if t['value'][1] > 50001:
             # clean up data for presenation
