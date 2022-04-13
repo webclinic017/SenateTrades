@@ -1,3 +1,6 @@
+# add further consderation for small caps
+# filter by purchases?
+
 import pandas as pd 
 from requests_html import HTMLSession
 from lxml import html 
@@ -39,7 +42,6 @@ def value_to_ints(value):
     ]
     return [low,high]
 
-
 def scrapeAllTradesToday():
     r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
     # if website is down
@@ -48,6 +50,7 @@ def scrapeAllTradesToday():
     except IndexError:
         print('website may be down. quitting.')
         sys.exit(1)
+
     n = len(trades)
     all_trades = []
     l1_head = [
