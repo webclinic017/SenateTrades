@@ -3,7 +3,6 @@ from requests_html import HTMLSession
 from lxml import html 
 from datetime import date,datetime
 
-today = date.today()
 today_sub = '2022-04-08'
 today_sub_dt = datetime.strptime(
     today_sub, '%Y-%m-%d'
@@ -36,7 +35,7 @@ def value_to_ints(value):
     return [low,high]
 
 
-def scrapeAllTradesToday():
+def scrapeAllTradesToday(date_datetime):
     r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
     trades = getTrades(r)
     n = len(trades)
@@ -66,7 +65,8 @@ def scrapeAllTradesToday():
                 trade.append(h)
                 trade.append(e.text)
             # today_sub used #
-            if str(today_sub) != trade[3]:
+            print(str())
+            if str(date_datetime) != trade[3]:
                 current = False
                 break
             trade[9] = trade[9].split('\n', 1)[0]
@@ -75,13 +75,13 @@ def scrapeAllTradesToday():
             all_trades.append(trade)
     return all_trades
 
-def determineLargeTrades(all_trades):
+def determineLargeTrades(all_trades, date_datetime):
     large_trades = []
     for t in all_trades:
         if t['value'][1] > 50001:
             # clean up data for presenation
             trade_date = str(t['trade date']) + ' (' + str((
-                today - datetime.strptime(
+                date_datetime - datetime.strptime(
                     t['trade date'], '%Y-%m-%d'
                 ).date()
             )).split(',')[0] + ' ago)'
@@ -103,8 +103,8 @@ def determineLargeTrades(all_trades):
     return large_trades
 
 def main():
-    all_trades = scrapeAllTradesToday()
-    large_trades = determineLargeTrades(all_trades)
+    all_trades = scrapeAllTradesToday(date.today())
+    large_trades = determineLargeTrades(all_trades, date.today())
     with open('data/daily_trades.txt', 'w') as f:
         for t in large_trades:
             for (key,item) in t.items():
@@ -115,6 +115,7 @@ def main():
                 )
             f.write('\n')
     print('trade scrape complete.')
+    print(all_trades)
 
 if __name__ == "__main__":
     main()
