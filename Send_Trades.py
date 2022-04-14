@@ -10,11 +10,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sys
 
-today = date.today()
-today_sub = '2022-04-08'
-today_sub_dt = datetime.strptime(
-    today_sub, '%Y-%m-%d'
-).date()
+# today_sub = '2022-04-08'
+# today_sub_dt = datetime.strptime(
+#     today_sub, '%Y-%m-%d'
+# ).date()
 
 def fetchSession(url):
     session = HTMLSession()
@@ -42,7 +41,7 @@ def value_to_ints(value):
     ]
     return [low,high]
 
-def scrapeAllTradesToday():
+def scrapeAllTradesToday(date_dt):
     r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
     # if website is down
     try:
@@ -78,7 +77,7 @@ def scrapeAllTradesToday():
                 trade.append(h)
                 trade.append(e.text)
             # today_sub used #
-            if str(today_sub) != trade[3]:
+            if str(date_dt) != trade[3]:
                 current = False
                 break
             trade[9] = trade[9].split('\n', 1)[0]
@@ -87,14 +86,14 @@ def scrapeAllTradesToday():
             all_trades.append(trade)
     return all_trades
 
-def determineLargeTrades(all_trades):
+def determineLargeTrades(all_trades, date_dt):
     large_trades = []
     # refine parameters. condsider buy/sell cases?
     for t in all_trades:
-        if t['value'][1] > 50001:
+        if t['value'][1] > 50001 and t['trade type'] == 'Purchase':
             # clean up data for presenation
             trade_date = str(t['trade date']) + ' (' + str((
-                today - datetime.strptime(
+                date_dt - datetime.strptime(
                     t['trade date'], '%Y-%m-%d'
                 ).date()
             )).split(',')[0] + ' ago)'
@@ -147,10 +146,13 @@ def sendEmail():
         print('no major trades.')
 
 def main():
-    all_trades = scrapeAllTradesToday()
-    large_trades = determineLargeTrades(all_trades)
+    all_trades = scrapeAllTradesToday(date.today())
+    # don't use yet
+    large_trades = determineLargeTrades(all_trades, date.today())
+    print(large_trades)
+    # .
     with open('data/daily_trades.txt', 'w') as f:
-        for t in large_trades:
+        for t in all_trades:
             for (key,item) in t.items():
                 f.write(
                     '%s : %s\n' % (
