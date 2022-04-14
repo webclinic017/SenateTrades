@@ -152,6 +152,7 @@ def main():
     print(large_trades)
     # .
     with open('data/daily_trades.txt', 'w') as f:
+        ### CHANGE BACK TO LARGE TRADES FOR NON-TESTING ###
         for t in all_trades:
             for (key,item) in t.items():
                 f.write(
