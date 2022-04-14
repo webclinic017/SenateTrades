@@ -1,6 +1,3 @@
-# add further consderation for small caps
-# filter by purchases?
-
 import pandas as pd 
 from requests_html import HTMLSession
 from lxml import html 
@@ -9,11 +6,6 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sys
-
-# today_sub = '2022-04-08'
-# today_sub_dt = datetime.strptime(
-#     today_sub, '%Y-%m-%d'
-# ).date()
 
 def fetchSession(url):
     session = HTMLSession()
@@ -124,7 +116,7 @@ def sendEmail():
         data = f.read()
 
     # if the length of the string from the file is not 0, then there was a 
-    # major trade executed today
+    # (major) trade executed today
     if len(data) != 0:
         print('major trade found.')
         message = MIMEMultipart('alternative')
@@ -146,10 +138,9 @@ def sendEmail():
         print('no major trades.')
 
 def main():
-    all_trades = scrapeAllTradesToday(date.today())
-    # don't use yet
-    large_trades = determineLargeTrades(all_trades, date.today())
-    print(large_trades)
+    all_trades = scrapeAllTradesToday(datetime.today())
+    # .
+    large_trades = determineLargeTrades(all_trades, datetime.today())
     # .
     with open('data/daily_trades.txt', 'w') as f:
         ### CHANGE BACK TO LARGE TRADES FOR NON-TESTING ###

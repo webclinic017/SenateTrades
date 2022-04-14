@@ -65,7 +65,6 @@ def scrapeAllTradesToday(date_datetime):
                 trade.append(h)
                 trade.append(e.text)
             # today_sub used #
-            print(str())
             if str(date_datetime) != trade[3]:
                 current = False
                 break
@@ -103,8 +102,9 @@ def determineLargeTrades(all_trades, date_datetime):
     return large_trades
 
 def main():
-    all_trades = scrapeAllTradesToday(date.today())
-    large_trades = determineLargeTrades(all_trades, date.today())
+    # fix dates
+    all_trades = scrapeAllTradesToday(today_sub_dt)
+    large_trades = determineLargeTrades(all_trades, today_sub_dt)
     with open('data/daily_trades.txt', 'w') as f:
         for t in large_trades:
             for (key,item) in t.items():
@@ -115,7 +115,6 @@ def main():
                 )
             f.write('\n')
     print('trade scrape complete.')
-    print(all_trades)
 
 if __name__ == "__main__":
     main()
