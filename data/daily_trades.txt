@@ -1,6 +1,7 @@
-Trade : ChannelAdvisor Corporation Common Stock [ECOM]
-Trade Type : Purchase
-Value : $50,001 to $100,000
-Trade Date : 2022-03-08 (36 days ago)
-Senator : Thomas H Tuberville [Tuberville, Tommy]
+trade date : 2022-03-09
+file date : 2022-04-13
+trade : Del Taco Restaurants, Inc. - Common Stock [TACO]
+senator : William F Hagerty, IV [Hagerty, Bill]
+trade type : Sale (Partial)
+value : [15001, 50000]
 
