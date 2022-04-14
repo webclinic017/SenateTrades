@@ -1,7 +1,0 @@
-trade date : 2022-03-09
-file date : 2022-04-13
-trade : Del Taco Restaurants, Inc. - Common Stock [TACO]
-senator : William F Hagerty, IV [Hagerty, Bill]
-trade type : Sale (Partial)
-value : [15001, 50000]
-
