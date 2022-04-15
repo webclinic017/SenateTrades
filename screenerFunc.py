@@ -1,5 +1,5 @@
 # ticker --> market cap 
-
+# add more helper methods for screening
 import pandas as pd 
 from requests_html import HTMLSession
 import os
@@ -41,4 +41,3 @@ def getmktCap(ticker):
     mc_string = str(mc_rows[1])
     value = re.search('>(.*)<', mc_string).group(1)
     return parseToMillions(value)
-
