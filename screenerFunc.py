@@ -48,58 +48,55 @@ def value_to_ints(value):
     ]
     return [low,high]
 
-def getmktCap(ticker):
+def determineLargeTrades(all_trades, date_dt):
+    large_trades = []
+    # refine parameters. condsider buy/sell cases?
+    for t in all_trades:
+        if t['value'][1] > 50001 and t['trade type'] == 'Purchase':
+            # clean up data for presenation
+            trade_date = str(t['trade date']) + ' (' + str((
+                date_dt - datetime.strptime(
+                    t['trade date'], '%Y-%m-%d'
+                ).date()
+            )).split(',')[0] + ' ago)'
+
+            value_string = '$' + (
+                "{:,}".format(t['value'][0])
+            ) + ' to $' + (
+                "{:,}".format(t['value'][1])
+            )
+            large_trades.append(
+                 {
+                'Trade' : t['trade'],
+                'Trade Type' : t['trade type'],
+                'Value' : value_string,
+                'Trade Date' : trade_date,
+                'Senator' : t['senator']
+                }
+            )
+    return large_trades
+
+def getMktCap(ticker):
     url = 'https://finance.yahoo.com/quote/{}/'.format(ticker)
     soup = getHTML(url)
     quote_summary = soup.find(id='quote-summary')
+    if quote_summary is None:
+        return -1
     tables = quote_summary.find_all('table')
+    if len(tables) == 0:
+        return -1
     mc_table = tables[1]
     mc_rows = mc_table.find_all('td')
     mc_string = str(mc_rows[1])
     value = re.search('>(.*)<', mc_string).group(1)
-    return parseToMillions(value)
+    if value == 'N/A':
+        return -1
+    return round(parseToMillions(value),2)
 
 today = '2022-04-13'
 today_dt = datetime.strptime(
     today, '%Y-%m-%d'
 ).date()
-
-def scrapeAllTradesDate(date, trades):
-    r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
-    n = len(trades)
-    all_trades = []
-    l1_head = [
-        'trade date', 'file date', 'trade', 'senator'
-    ]
-    l2_head = [
-        'trade type', 'value'
-    ]
-    current = True
-    while current:
-        for i in range(0,n,2):
-            trade = []
-            l1_elements = trades[i].find('td')
-            l2_elements = trades[i+1].find('td')[:-1]
-            file_date, trade_date = l1_elements[0].text.split('\n')
-            trade_snip = l1_elements[1].text
-            senator = l1_elements[2].text
-            l1_cleaned = [
-                trade_date,file_date,trade_snip,senator
-            ]
-            for h,e in zip(l1_head, l1_cleaned):
-                trade.append(h)
-                trade.append(e)
-            for h,e in zip(l2_head, l2_elements):
-                trade.append(h)
-                trade.append(e.text)
-            if trade[3] != date:
-                current = False
-                break 
-            trade[9] = trade[9].split('\n', 1)[0]
-            trade[11] = value_to_ints(trade[11])
-            trade = arr_to_dict(trade)
-            all_trades.append(trade)
-    return all_trades
 
 def isLarge(value_):
     return value_[1] > 50001
@@ -152,7 +149,7 @@ def list_tickers(equity_trades):
     return tickers
 
 def isSmallCap(ticker):
-    return getmktCap(ticker) < 2000
+    return getMktCap(ticker) < 2000
 
 def isSCEP(t):
     if isEquity(t['trade']):
