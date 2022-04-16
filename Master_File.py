@@ -109,7 +109,8 @@ def determineLargeTrades(all_trades, date_dt):
 def sendEmail():
     port = 465
     send_email = 'ders.mailbot@gmail.com'
-    #receive_email = 'andersseline15@gmail.com'
+    receive_email = 'andersseline15@gmail.com'
+    # encrypt 
     password = 'Mailbot15'
 
     with open('data/daily_trades.txt', 'r') as f:
