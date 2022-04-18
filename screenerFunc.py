@@ -67,11 +67,11 @@ def determineLargeTrades(all_trades, date_dt):
             )
             large_trades.append(
                  {
-                'Trade' : t['trade'],
-                'Trade Type' : t['trade type'],
-                'Value' : value_string,
-                'Trade Date' : trade_date,
-                'Senator' : t['senator']
+                'trade' : t['trade'],
+                'trade type' : t['trade type'],
+                'value' : value_string,
+                'trade date' : trade_date,
+                'senator' : t['senator']
                 }
             )
     return large_trades
@@ -128,11 +128,11 @@ def getLargeEquity(all_trades):
             )
             large_trades.append(
                     {
-                'Trade' : t['trade'],
-                'Trade Type' : t['trade type'],
-                'Value' : value_string,
-                'Trade Date' : trade_date,
-                'Senator' : t['senator']
+                'trade' : t['trade'],
+                'trade type' : t['trade type'],
+                'value' : value_string,
+                'trade date' : trade_date,
+                'senator' : t['senator']
                 }
             )
     return large_trades
@@ -144,12 +144,13 @@ def list_tickers(equity_trades):
     tickers = []
     for e in equity_trades:
         tickers.append(
-            getTicker(e['Trade'])
+            getTicker(e['trade'])
         )
     return tickers
 
 def isSmallCap(ticker):
-    return getMktCap(ticker) < 2000
+    # returns -1 when error in finding mkt cap
+    return getMktCap(ticker) < 2000 and getMktCap(ticker) > 0
 
 def isSCEP(t):
     if isEquity(t['trade']):
@@ -171,11 +172,25 @@ def getSmallCaps(all_trades):
             )
             large_trades.append(
                  {
-                'Trade' : t['trade'],
-                'Trade Type' : t['trade type'],
-                'Value' : value_string,
-                'Trade Date' : trade_date,
-                'Senator' : t['senator']
+                'trade' : t['trade'],
+                'trade type' : t['trade type'],
+                'value' : value_string,
+                'trade date' : trade_date,
+                'senator' : t['senator']
                 }
             )
     return large_trades
+
+# fix 
+def getImportantEquity(all_trades):
+    important_trades = []
+    for t in all_trades:
+        if isEquity(t['trade']) and isPurchase(t['trade']):
+            print('1')
+            if isLarge(t['trade']):
+                print('2')
+                important_trades.append(t)
+            elif isSmallCap(getTicker(t['trade'])):
+                print('3')
+                important_trades.append(t)
+    return important_trades
