@@ -1,189 +1,120 @@
-trade date : 2022-03-30
-file date : 2022-04-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Limestone Bancorp, Inc. - Common Stock [LMST]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/LMST/
+Trade Date : 2022-03-30 (22 days ago)
+File Date : 2022-04-08
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : Limestone Bancorp, Inc. - Common Stock [LMST]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/LMST/
 
-trade date : 2022-03-30
-file date : 2022-04-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : First Guaranty Bancshares, Inc. - Common Stock [FGBI]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/FGBI/
+Trade Date : 2022-03-30 (22 days ago)
+File Date : 2022-04-08
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : First Guaranty Bancshares, Inc. - Common Stock [FGBI]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/FGBI/
 
-trade date : 2022-03-30
-file date : 2022-04-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Humacyte, Inc. - Common Stock [HUMA]
-trade type : Purchase
-value : [15001, 50000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/HUMA/
+Trade Date : 2022-03-30 (22 days ago)
+File Date : 2022-04-08
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : Humacyte, Inc. - Common Stock [HUMA]
+Trade Value : $15,001 to $50,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/HUMA/
 
-trade date : 2022-03-21
-file date : 2022-04-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : ChannelAdvisor Corporation Common Stock [ECOM]
-trade type : Purchase
-value : [15001, 50000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/ECOM/
+Trade Date : 2022-03-21 (31 days ago)
+File Date : 2022-04-08
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : ChannelAdvisor Corporation Common Stock [ECOM]
+Trade Value : $15,001 to $50,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/ECOM/
 
-trade date : 2022-03-08
-file date : 2022-04-08
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : ChannelAdvisor Corporation Common Stock [ECOM]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/ECOM/
+Trade Date : 2022-03-08 (44 days ago)
+File Date : 2022-04-08
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : ChannelAdvisor Corporation Common Stock [ECOM]
+Trade Value : $50,001 to $100,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/ECOM/
 
-trade date : 2022-02-24
-file date : 2022-03-23
-senator : Ron L Wyden [Wyden, Ron]
-trade : Apple Inc. - Common Stock [AAPL]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/AAPL/
+Trade Date : 2022-02-10 (70 days ago)
+File Date : 2022-03-11
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : United States Steel Corporation Common Stock [X]
+Trade Value : $100,001 to $250,000
+Market Cap : Medium Cap ($2B to $10B)
+https://finance.yahoo.com/quote/X/
 
-trade date : 2022-02-10
-file date : 2022-03-11
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : United States Steel Corporation Common Stock [X]
-trade type : Purchase
-value : [100001, 250000]
-mkt cap : medium
-yahoo finance : https://finance.yahoo.com/quote/X/
+Trade Date : 2022-01-31 (80 days ago)
+File Date : 2022-02-03
+Senator : Thomas R Carper [Carper, Thomas R.]
+Equity : Western Asset Inflation-Linked Opportunities & Inc [WIW]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/WIW/
 
-trade date : 2022-02-07
-file date : 2022-03-11
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : PayPal Holdings, Inc. - Common Stock [PYPL]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/PYPL/
+Trade Date : 2022-01-26 (85 days ago)
+File Date : 2022-02-03
+Senator : Thomas R Carper [Carper, Thomas R.]
+Equity : Western Asset Inflation-Linked Opportunities & Inc [WIW]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/WIW/
 
-trade date : 2022-01-24
-file date : 2022-02-14
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Barrick Gold Corporation Common Stock (BC) [GOLD]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/GOLD/
+Trade Date : 2022-01-18 (93 days ago)
+File Date : 2022-02-03
+Senator : Thomas R Carper [Carper, Thomas R.]
+Equity : Western Asset Inflation-Linked Opportunities & Inc [WIW]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/WIW/
 
-trade date : 2022-01-14
-file date : 2022-02-14
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Alibaba Group Holding Limited American Depositary Option Type: Put Strike price: $230.00 Expires: 09/16/2022 [BABA]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/BABA/
+Trade Date : 2022-01-18 (93 days ago)
+File Date : 2022-02-03
+Senator : Thomas R Carper [Carper, Thomas R.]
+Equity : Cohen & Steers Limited Duration Preferred and Inco [LDP]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/LDP/
 
-trade date : 2022-01-31
-file date : 2022-02-03
-senator : Thomas R Carper [Carper, Thomas R.]
-trade : Western Asset Inflation-Linked Opportunities & Inc [WIW]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/WIW/
+Trade Date : 2022-01-18 (93 days ago)
+File Date : 2022-02-03
+Senator : Thomas R Carper [Carper, Thomas R.]
+Equity : Global Medical REIT Inc. Common Stock [GMRE]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/GMRE/
 
-trade date : 2022-01-26
-file date : 2022-02-03
-senator : Thomas R Carper [Carper, Thomas R.]
-trade : Western Asset Inflation-Linked Opportunities & Inc [WIW]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/WIW/
+Trade Date : 2021-12-13 (129 days ago)
+File Date : 2022-01-12
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : Stratasys, Ltd. - Common Stock [SSYS]
+Trade Value : $15,001 to $50,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/SSYS/
 
-trade date : 2022-01-18
-file date : 2022-02-03
-senator : Thomas R Carper [Carper, Thomas R.]
-trade : Western Asset Inflation-Linked Opportunities & Inc [WIW]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/WIW/
+Trade Date : 2021-11-22 (150 days ago)
+File Date : 2021-12-10
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : ChannelAdvisor Corporation Common Stock Option Type: Short Sale Strike price: $25.00 Expires: 06/17/2022 [ECOM]
+Trade Value : $1,001 to $15,000
+Market Cap : Small Cap (Under $2B)
+https://finance.yahoo.com/quote/ECOM/
 
-trade date : 2022-01-18
-file date : 2022-02-03
-senator : Thomas R Carper [Carper, Thomas R.]
-trade : Cohen & Steers Limited Duration Preferred and Inco [LDP]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/LDP/
+Trade Date : 2021-11-08 (164 days ago)
+File Date : 2021-12-10
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : Cleveland-Cliffs Inc. Common Stock [CLF]
+Trade Value : $100,001 to $250,000
+Market Cap : Large Cap (Over $10B)
+https://finance.yahoo.com/quote/CLF/
 
-trade date : 2022-01-18
-file date : 2022-02-03
-senator : Thomas R Carper [Carper, Thomas R.]
-trade : Global Medical REIT Inc. Common Stock [GMRE]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/GMRE/
-
-trade date : 2021-12-15
-file date : 2022-01-12
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Alibaba Group Holding Limited American Depositary [BABA]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/BABA/
-
-trade date : 2021-12-14
-file date : 2022-01-12
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Alibaba Group Holding Limited American Depositary [BABA]
-trade type : Purchase
-value : [50001, 100000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/BABA/
-
-trade date : 2021-12-13
-file date : 2022-01-12
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Stratasys, Ltd. - Common Stock [SSYS]
-trade type : Purchase
-value : [15001, 50000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/SSYS/
-
-trade date : 2021-11-22
-file date : 2021-12-10
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : ChannelAdvisor Corporation Common Stock Option Type: Short Sale Strike price: $25.00 Expires: 06/17/2022 [ECOM]
-trade type : Purchase
-value : [1001, 15000]
-mkt cap : small
-yahoo finance : https://finance.yahoo.com/quote/ECOM/
-
-trade date : 2021-11-08
-file date : 2021-12-10
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Cleveland-Cliffs Inc. Common Stock [CLF]
-trade type : Purchase
-value : [100001, 250000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/CLF/
-
-trade date : 2021-11-02
-file date : 2021-12-10
-senator : Thomas H Tuberville [Tuberville, Tommy]
-trade : Southern Copper Corporation Common Stock [SCCO]
-trade type : Purchase
-value : [100001, 250000]
-mkt cap : large
-yahoo finance : https://finance.yahoo.com/quote/SCCO/
+Trade Date : 2021-11-02 (170 days ago)
+File Date : 2021-12-10
+Senator : Thomas H Tuberville [Tuberville, Tommy]
+Equity : Southern Copper Corporation Common Stock [SCCO]
+Trade Value : $100,001 to $250,000
+Market Cap : Large Cap (Over $10B)
+https://finance.yahoo.com/quote/SCCO/
 
