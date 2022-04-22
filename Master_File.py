@@ -111,7 +111,8 @@ def sendEmail():
     send_email = 'ders.mailbot@gmail.com'
     receive_email = 'andersseline15@gmail.com'
     # encrypt 
-    password = 'Mailbot15'
+    with open('data/password.txt','r') as f:
+        password = f.read()
 
     with open('data/daily_trades.txt', 'r') as f:
         data = f.read()
