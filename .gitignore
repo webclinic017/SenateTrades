@@ -1,3 +1,4 @@
 *.pyc
 password.txt
 legacy
+__pycache__
