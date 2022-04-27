@@ -61,12 +61,12 @@ def getFirstRowEntry(ticker):
 
 def isStock(row_one):
     flag = 'data-test="(.*)-value'
-    seach = re.search(
+    search = re.search(
         flag, row_one
     )
-    if seach is None:
+    if search is None:
         return -1
-    marker = seach.group(1)
+    marker = search.group(1)
     if marker == 'MARKET_CAP':
         return 1
     elif marker == 'NET_ASSETS':
@@ -86,7 +86,10 @@ def parseToMillions(value_string):
     return number
 
 def getNAVCAP(row_one):
-    value = re.search('>(.*)<', row_one).group(1)
+    value = re.search('>(.*)<', row_one)
+    if value is None:
+        return -1
+    value = value.group(1)
     if value == 'N/A':
         return -1
     return round(parseToMillions(value),2)
