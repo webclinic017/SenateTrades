@@ -384,13 +384,14 @@ def sendEmails(trades, toList = False):
 
 def main():
 
-    onlyToday = True
-    backtest = False
+    onlyToday = False
+    backtest = True
+    toList = False
     backtestDate = '2022-04-01'
 
     trades = scrapeImportantTrades(onlyToday=onlyToday, backtest=backtest, backtestDate=backtestDate)
     trades_for_mail = formatForEmail(trades)
-    sendEmails(trades=trades_for_mail, toList=True)
+    sendEmails(trades=trades_for_mail, toList=toList)
 
 if __name__ == '__main__':
     main()
