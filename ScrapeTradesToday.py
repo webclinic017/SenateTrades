@@ -384,8 +384,8 @@ def sendEmails(trades, toList = False):
 
 def main():
 
-    onlyToday = False
-    backtest = True
+    onlyToday = True
+    backtest = False
     toList = False
     backtestDate = '2022-04-01'
 
