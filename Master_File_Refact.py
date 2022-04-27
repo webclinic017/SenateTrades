@@ -222,10 +222,6 @@ def cleanText(trades_list):
         )
         # debug weird behavior for third ECOM trade
         # first two print the same thing fine, last one prints empty url and title
-        # print(getTicker(t['trade']))
-        # for i in list_of_titles_urls:
-        #     for key,value in i.items():
-        #         print(key, ':', value)
         if len(list_of_titles_urls) > 1:
             trades_for_txt.append(
                 {
@@ -325,8 +321,13 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False):
     return all_trades
 
 def main():
-    # implement
-    print()
+    # add printouts to track run progress?
+    # default: today = False
+    trades = scrapeImportantTrades()
+    trades_for_mail = cleanText(trades)
+    writeToFile(trades_for_mail)
+    # default: toList = False
+    sendEmail()
 
 if __name__ == '__main__':
     main()
