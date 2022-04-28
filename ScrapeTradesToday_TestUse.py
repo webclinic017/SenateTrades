@@ -1,5 +1,7 @@
+# use for backtesting changes 
+
 from requests_html import HTMLSession
-from datetime import datetime
+from datetime import datetime,timedelta
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -195,7 +197,7 @@ def getHTMLNoNews(t):
                 mkt_cap = t['Market Cap']
             )
 
-def scrapeImportantTrades(today=str(datetime.today().date()), onlyToday=False, backtest=False, backtestDate='2022-04-01'):
+def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backtest=False, backtestDate='2022-04-01'):
     r = fetchSession('https://sec.report/Senate-Stock-Disclosures')
     # if website is down
     try:
@@ -215,13 +217,13 @@ def scrapeImportantTrades(today=str(datetime.today().date()), onlyToday=False, b
 
         # make sure trade happened today before doing anything 
         file_date, trade_date = l1_elements[0].text.split('\n')
-        if file_date != today and onlyToday:
+        if file_date != str(today) and onlyToday:
             break
 
         if backtest:
             file_dt = datetime.strptime(file_date, '%Y-%m-%d').date()
-            days = int(str(file_dt - dt_backtest).split(' ')[0])
-            if days < 0:
+            days = file_dt - dt_backtest
+            if days < timedelta(days=0):
                 break
 
         # ensure trade is a purchase, otherwise contniue to next trade
@@ -385,8 +387,8 @@ def sendEmails(trades, toList = False):
 
 def main():
 
-    onlyToday = True
-    backtest = False
+    onlyToday = False
+    backtest = True
     toList = False
     backtestDate = '2022-04-01'
 
