@@ -390,7 +390,7 @@ def main():
     onlyToday = False
     backtest = True
     toList = False
-    backtestDate = '2022-04-01'
+    backtestDate = '2022-04-05'
 
     trades = scrapeImportantTrades(onlyToday=onlyToday, backtest=backtest, backtestDate=backtestDate)
     trades_for_mail = formatForEmail(trades)
