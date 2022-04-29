@@ -168,7 +168,7 @@ def writeToFile(trades, path):
             f.write('\n')
 
 def getHTMLNews(t):
-    return open('html_temps/format.html').read().format(
+    return open('res/html/format.html').read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
                 trade_date = t['Trade Date'],
@@ -186,7 +186,7 @@ def getHTMLNews(t):
             )
 
 def getHTMLNoNews(t):
-    return open('html_temps/format_no_news.html').read().format(
+    return open('res/html/format_no_news.html').read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
                 trade_date = t['Trade Date'],
@@ -338,24 +338,24 @@ def formatForEmail(trades_list):
 def sendEmails(trades, toList = False):
     port = 465
     send_email = 'ders.mailbot@gmail.com'
-    with open('data/password.txt','r') as f:
+    with open('res/data/password.txt','r') as f:
         password = f.read()
 
     # get list of emails from text file in data folder 
     recipients = []
     if toList:
-        with open('data/mailing_list.txt','r') as f:
+        with open('res/data/mailing_list.txt','r') as f:
             lines = f.readlines()
         for l in lines:
             recipients.append(l.strip())
     else:
         recipients = [send_email]
 
-    writeToFile(trades,'data/daily_trades.txt')
+    writeToFile(trades,'res/data/daily_trades.txt')
 
     for t in trades:
-        writeTradeToFile(t, 'data/trade_for_html.txt')
-        with open('data/trade_for_html.txt','r') as f:
+        writeTradeToFile(t, 'res/data/trade_for_html.txt')
+        with open('res/data/trade_for_html.txt','r') as f:
             data = f.read()
         # if the length of the string from the file is not 0, then there was a 
         # (major) trade executed today
