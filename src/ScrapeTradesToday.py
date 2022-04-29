@@ -338,24 +338,24 @@ def formatForEmail(trades_list):
 def sendEmails(trades, toList = False):
     port = 465
     send_email = 'ders.mailbot@gmail.com'
-    with open('res/data/password.txt','r') as f:
+    with open('res/password.txt','r') as f:
         password = f.read()
 
     # get list of emails from text file in data folder 
     recipients = []
     if toList:
-        with open('res/data/mailing_list.txt','r') as f:
+        with open('res/mailing_list.txt','r') as f:
             lines = f.readlines()
         for l in lines:
             recipients.append(l.strip())
     else:
         recipients = [send_email]
 
-    writeToFile(trades,'res/data/daily_trades.txt')
+    writeToFile(trades,'res/daily_trades.txt')
 
     for t in trades:
-        writeTradeToFile(t, 'res/data/trade_for_html.txt')
-        with open('res/data/trade_for_html.txt','r') as f:
+        writeTradeToFile(t, 'res/trade_for_html.txt')
+        with open('res/trade_for_html.txt','r') as f:
             data = f.read()
         # if the length of the string from the file is not 0, then there was a 
         # (major) trade executed today
