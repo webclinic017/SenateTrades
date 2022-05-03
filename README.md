@@ -1,1 +1,5 @@
 # Senate Trading Tracker
+
+<p>The goal of this program is to find small, under the radar companies which have been recently disclosed as being purchased by US senators.</p>
+
+<p>Python script to track senator trading activites, and discern which of these are of most interest. Script scrapes the [SEC EDGAR Insider Trading Disclosures List](https://sec.report/Senate-Stock-Disclosures) and searches for trades which have been filed on the current day. Determines if the traded asset was purchased, and if the asset was an equity. If so, the equity market cap and trade size are measured to classify the trade as important, in which case an alert is send via email. All equity purchases of over $100,000, regardless of market cap, are important. Trades of medium cap firms (between $2B and $10B) valuing at least $50,000 are important, and all small cap equities traded are important. This logic stems from the idea that a senator trading a very small bank, manufacturer, or other firm is significantly more interesting than trading a larger firm - think Google or Goldman Sachs.</p>
