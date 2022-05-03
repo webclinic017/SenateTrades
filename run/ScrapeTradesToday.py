@@ -337,9 +337,12 @@ def formatForEmail(trades_list):
 
 def sendEmails(trades, toList = False):
     port = 465
-    send_email = 'ders.mailbot@gmail.com'
-    with open('res/password.txt','r') as f:
-        password = f.read()
+    
+    # login info
+    with open('res/account_info.txt', 'r') as f:
+        lines = f.readlines()
+        send_email = lines[0]
+        password = lines[1]
 
     # get list of emails from text file in data folder 
     recipients = []
