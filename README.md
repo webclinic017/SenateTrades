@@ -14,5 +14,6 @@
 
 In addition, I also feed the equity information to [Google News](https://news.google.com/topstories?hl=en-US&gl=US&ceid=US:en), retrieve the top 3 most recent/relevant articles, and send those to the user under the main content. The ticker in the body header also contains a link to the equity's [Yahoo Finance](https://finance.yahoo.com/) description page. An example of one of these alerts can be seen below:
 
-- [Example of Email Alert](/res/sample_alert.JPG)
+![](/res/sample_alert.JPG)
 
+The program is run via a [batch file](/tools/run_trades.bat) two times on a daily basis, on market close and market open, to keep me updated on any potential trades that may be worth researching more. I made this as a side project while studying at Lehigh University, and I hope you find it interesting!
