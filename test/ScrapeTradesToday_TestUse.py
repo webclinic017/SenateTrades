@@ -9,6 +9,7 @@ import sys
 import re 
 from bs4 import BeautifulSoup
 import nums_from_string
+import json
 
 def fetchSession(url):
     session = HTMLSession()
@@ -354,7 +355,10 @@ def sendEmails(trades, toList = False):
     else:
         recipients = [send_email]
 
-    writeToFile(trades,'res/daily_trades.txt')
+    with open('res/daily_trades.json','w') as f:
+        f.write(
+            json.dumps(obj=trades, indent=4)
+            )
 
     for t in trades:
         writeTradeToFile(t, 'res/trade_for_html.txt')
