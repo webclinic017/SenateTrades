@@ -1,5 +1,5 @@
 *.pyc
-password.txt
+account_info.txt
 mailing_list.txt
 trade_for_html.txt
 legacy
