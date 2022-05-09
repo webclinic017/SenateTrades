@@ -1,4 +1,4 @@
-# use for backtesting changes 
+# use for backtesting / changes 
 
 from requests_html import HTMLSession
 from datetime import datetime,timedelta
@@ -169,7 +169,8 @@ def writeToFile(trades, path):
             f.write('\n')
 
 def getHTMLNews(t):
-    return open('res/html/format.html').read().format(
+    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\format.html'
+    return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
                 trade_date = t['Trade Date'],
@@ -187,7 +188,8 @@ def getHTMLNews(t):
             )
 
 def getHTMLNoNews(t):
-    return open('res/html/format_no_news.html').read().format(
+    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\format_no_news.html'
+    return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
                 trade_date = t['Trade Date'],
@@ -338,9 +340,9 @@ def formatForEmail(trades_list):
 
 def sendEmails(trades, toList = False):
     port = 465
-
     # login info
-    with open('res/account_info.txt', 'r') as f:
+    acct_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\account_info.txt'
+    with open(acct_path, 'r') as f:
         lines = f.readlines()
         send_email = lines[0]
         password = lines[1]
@@ -348,21 +350,25 @@ def sendEmails(trades, toList = False):
     # get list of emails from text file in data folder 
     recipients = []
     if toList:
-        with open('res/mailing_list.txt','r') as f:
+        list_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mailing_list.txt'
+        with open(list_path,'r') as f:
             lines = f.readlines()
         for l in lines:
             recipients.append(l.strip())
     else:
         recipients = [send_email]
 
-    with open('res/daily_trades.json','w') as f:
+    dump_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\daily_trades.json'
+    with open(dump_path,'w') as f:
         f.write(
             json.dumps(obj=trades, indent=4)
             )
 
     for t in trades:
-        writeTradeToFile(t, 'res/trade_for_html.txt')
-        with open('res/trade_for_html.txt','r') as f:
+        html_write_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_for_html.txt'
+        writeTradeToFile(t, html_write_path)
+
+        with open(html_write_path,'r') as f:
             data = f.read()
         # if the length of the string from the file is not 0, then there was a 
         # (major) trade executed today
