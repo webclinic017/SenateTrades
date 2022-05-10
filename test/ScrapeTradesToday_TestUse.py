@@ -10,6 +10,7 @@ import re
 from bs4 import BeautifulSoup
 import nums_from_string
 import json
+from email.utils import formataddr
 
 def fetchSession(url):
     session = HTMLSession()
@@ -375,7 +376,8 @@ def sendEmails(trades, toList = False):
         if len(data) != 0:
             message = MIMEMultipart('alternative')
             message['Subject'] = 'Trade Alert'
-            message['From'] = send_email
+            message['From'] = formataddr(('SenateTrades', send_email))
+            print('post formataddr')
             message['To'] = ', '.join(recipients) # change post testing
             message['Bcc'] = ''
 
