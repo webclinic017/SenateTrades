@@ -170,7 +170,7 @@ def writeToFile(trades, path):
             f.write('\n')
 
 def getHTMLNews(t):
-    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\format.html'
+    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\format.html'
     return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
@@ -189,7 +189,7 @@ def getHTMLNews(t):
             )
 
 def getHTMLNoNews(t):
-    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\format_no_news.html'
+    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\format_no_news.html'
     return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
@@ -342,7 +342,7 @@ def formatForEmail(trades_list):
 def sendEmails(trades, toList = False):
     port = 465
     # login info
-    acct_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\account_info.txt'
+    acct_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mail_info\\account_info.txt'
     with open(acct_path, 'r') as f:
         lines = f.readlines()
         send_email = lines[0]
@@ -351,7 +351,7 @@ def sendEmails(trades, toList = False):
     # get list of emails from text file in data folder 
     recipients = []
     if toList:
-        list_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mailing_list.txt'
+        list_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mail_info\\mailing_list.txt'
         with open(list_path,'r') as f:
             lines = f.readlines()
         for l in lines:
@@ -366,7 +366,7 @@ def sendEmails(trades, toList = False):
             )
 
     for t in trades:
-        html_write_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_for_html.txt'
+        html_write_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\trade_for_html.txt'
         writeTradeToFile(t, html_write_path)
 
         with open(html_write_path,'r') as f:

@@ -1,6 +1,12 @@
 *.pyc
-account_info.txt
-mailing_list.txt
-trade_for_html.txt
-legacy
 __pycache__
+
+mail_info
+legacy
+emails
+test
+
+*.json
+
+SendUpdates.py
+trade_for_html.txt
