@@ -6,8 +6,6 @@ legacy
 emails
 test
 
-*.json
-
 SendUpdates_Single.py
 SendUpdates_ToList.py
 trade_for_html.txt
