@@ -151,24 +151,6 @@ def writeTradeToFile(trade, path):
                 )
         f.write('\n')
 
-def writeToFile(trades, path):
-    with open(path, 'w') as f:
-        for t in trades:
-            for (key,item) in t.items():
-                if key == 'Yahoo!':
-                    f.write(
-                        '%s\n' % (
-                        item
-                        )
-                    )
-                else:
-                    f.write(
-                        '%s : %s\n' % (
-                        key,item
-                        )
-                    )
-            f.write('\n')
-
 def getHTMLNews(t):
     path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\format.html'
     return open(path).read().format(
@@ -273,7 +255,20 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
                 'mkt cap' : cap_string,
                 'yahoo finance' : url
             }
+            # add ticker and trade date to master list
+            path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_info\\master_list_of_trades.txt'
+            with open(path, 'a') as f:
+                f.write('%s\t%s\n' % (
+                    ticker, file_date
+                ))
             all_trades.append(trade_dict)
+
+    # print all trades from today to .json file
+    dump_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_info\\daily_trades.json'
+    with open(dump_path,'w') as f:
+        f.write(
+            json.dumps(obj=trades, indent=4)
+            )
     return all_trades
 
 def formatForEmail(trades_list):
@@ -358,12 +353,6 @@ def sendEmails(trades, toList = False):
             recipients.append(l.strip())
     else:
         recipients = [send_email]
-
-    dump_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\daily_trades.json'
-    with open(dump_path,'w') as f:
-        f.write(
-            json.dumps(obj=trades, indent=4)
-            )
 
     for t in trades:
         html_write_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\trade_for_html.txt'
