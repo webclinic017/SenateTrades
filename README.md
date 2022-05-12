@@ -1,4 +1,4 @@
-# Senate Trading Tracker
+# Welcome to SenateTrades!
 
 <p>The goal of this program is to find small, under the radar companies whose equity has recently been disclosed as being purchased by US senators.</p>
 
