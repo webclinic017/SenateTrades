@@ -22,3 +22,5 @@ The program is run via a [batch file](/tools/run_trades.bat) two times on a dail
 
 <b> If you are interested in being added to the email list, or have any other questions, please email:
 ders.mailbot@gmail.com</b>
+
+![](/res/repo_pics/git_logo.JPG)
