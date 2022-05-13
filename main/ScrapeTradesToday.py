@@ -148,7 +148,7 @@ def writeTradeToFile(trade, path):
         f.write('\n')
 
 def getHTMLNews(t):
-    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\format.html'
+    path = '..\\res\\html\\alert_formatting\\format.html'
     return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
@@ -167,7 +167,7 @@ def getHTMLNews(t):
             )
 
 def getHTMLNoNews(t):
-    path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\format_no_news.html'
+    path = '..\\res\\html\\alert_formatting\\format_no_news.html'
     return open(path).read().format(
                 quote_link = t['Yahoo!'],
                 ticker = getTicker(t['Equity']),
@@ -263,7 +263,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
                 'yahoo finance' : url
             }
             # add ticker and trade date to master list for tracking
-            path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_info\\master_list_of_trades.txt'
+            path = '..\\res\\trade_info\\master_list_of_trades.txt'
             with open(path, 'a') as f:
                 f.write('%s\t%s\n' % (
                     ticker, file_date
@@ -271,7 +271,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
             all_trades.append(trade_dict)
 
     # print all trades from today to .json file
-    dump_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_info\\daily_trades.json'
+    dump_path = '..\\test\\daily_trades.json'
     with open(dump_path,'w') as f:
         f.write(
             json.dumps(obj=trades, indent=4)
@@ -340,7 +340,7 @@ def formatForEmail(trades_list):
 def sendEmails(trades, toList = False):
     port = 465
     # login info
-    acct_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mail_info\\account_info.txt'
+    acct_path = '..\\res\\mail_info\\account_info.txt'
     with open(acct_path, 'r') as f:
         lines = f.readlines()
         send_email = lines[0]
@@ -349,7 +349,7 @@ def sendEmails(trades, toList = False):
     # get list of emails from text file in data folder 
     recipients = []
     if toList:
-        list_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\mail_info\\mailing_list.txt'
+        list_path = '..\\res\\mail_info\\mailing_list.txt'
         with open(list_path,'r') as f:
             lines = f.readlines()
         for l in lines:
@@ -358,7 +358,7 @@ def sendEmails(trades, toList = False):
         recipients = [send_email]
 
     for t in trades:
-        html_write_path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\html\\alert_formatting\\trade_for_html.txt'
+        html_write_path = '..\\res\\html\\alert_formatting\\trade_for_html.txt'
         writeTradeToFile(t, html_write_path)
 
         with open(html_write_path,'r') as f:
