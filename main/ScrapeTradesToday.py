@@ -278,7 +278,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
     dump_path = '..\\test\\daily_trades.json'
     with open(dump_path,'w') as f:
         f.write(
-            json.dumps(obj=trades, indent=4)
+            json.dumps(obj=all_trades, indent=4)
             )
     return all_trades
 
