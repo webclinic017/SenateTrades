@@ -81,6 +81,9 @@ def isStock(right_table):
 def getMktCap(right_table):
     return right_table['Market Cap']
 
+def getOpen(left_table):
+    return left_table['Open']
+
 def parseToMillions(value_string):
     unit = value_string[-1:]
     number = nums_from_string.get_nums(value_string)[0]
@@ -231,6 +234,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
         if not isStock(right_table) or 'Option' in trade:
             continue
 
+        open_price = getOpen(left_table)
         mkt_cap = getMktCap(right_table)
         try:
             mkt_cap = parseToMillions(mkt_cap)
@@ -265,8 +269,8 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
             # add ticker and trade date to master list for tracking
             path = '..\\res\\trade_info\\master_list_of_trades.txt'
             with open(path, 'a') as f:
-                f.write('%s\t%s\n' % (
-                    ticker, file_date
+                f.write('%s\t%s\t%s\n' % (
+                    ticker, open_price, file_date
                 ))
             all_trades.append(trade_dict)
 
