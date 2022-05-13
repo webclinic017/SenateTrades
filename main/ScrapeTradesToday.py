@@ -7,7 +7,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sys
 import re 
-from bs4 import BeautifulSoup
 import nums_from_string
 import json
 from email.utils import formataddr 
@@ -33,50 +32,54 @@ def value_to_ints(value):
     ]
     return [low,high]
 
-def getHTML(url):
-    r = fetchSession(url)
-    h = r.text
-    doc = BeautifulSoup(h, 'html.parser')
-    return doc
-
 def getTicker(trade_):
     try:
         return re.findall('\[(.*?)\]', trade_)[0]
     except IndexError:
         return ''
 
-def getFirstRowEntry(ticker):
-    url = 'https://finance.yahoo.com/quote/{}/'.format(ticker)
-    soup = getHTML(url)
-    quote_summary = soup.find(id='quote-summary')
-    if quote_summary is None:
-        return ''
-    tables = quote_summary.find_all('table')
-    if len(tables) == 0:
-        return ''
-    # right side table
-    mc_table = tables[1]
-    # get all rows
-    mc_rows = mc_table.find_all('td')
-    # entire row 
-    mc_string = str(mc_rows[1])
-    return mc_string
-
-def isStock(row_one):
-    flag = 'data-test="(.*)-value'
-    seach = re.search(
-        flag, row_one
+def getYahooInfo(ticker):
+    url = 'https://finance.yahoo.com/quote/{}'.format(ticker)
+    r = fetchSession(url)
+    # handle invalid ticker
+    tables = r.html.find('table')
+    if len(tables) == 1:
+        return -1,-1
+    
+    left_table = tables[0]
+    right_table = tables[1]
+    left_rows = left_table.find('td')
+    right_rows = right_table.find('td')
+    left_items = []
+    left_values = []
+    right_items = []
+    right_values = []
+    
+    i = 0
+    for l,r in zip(left_rows, right_rows):
+        # evens = item headers
+        if i % 2 == 0:
+            left_items.append(l.text)
+            right_items.append(r.text)
+        # odds = values in table
+        else:
+            left_values.append(l.text)
+            right_values.append(r.text)
+        i += 1
+    return (
+        dict(
+            zip(left_items, left_values)
+        ),
+        dict(
+            zip(right_items, right_values)
+        )
     )
-    if seach is None:
-        return -1
-    marker = seach.group(1)
-    if marker == 'MARKET_CAP':
-        return 1
-    elif marker == 'NET_ASSETS':
-        return 0
-    # N/A
-    else:
-        return -1
+
+def isStock(right_table):
+    return [*right_table][0] == 'Market Cap'
+
+def getMktCap(right_table):
+    return right_table['Market Cap']
 
 def parseToMillions(value_string):
     unit = value_string[-1:]
@@ -88,12 +91,6 @@ def parseToMillions(value_string):
         number = number * 1000000
     return number
 
-def getNAVCAP(row_one):
-    value = re.search('>(.*)<', row_one).group(1)
-    if value == 'N/A':
-        return -1
-    return round(parseToMillions(value),2)
-
 def cleanNewsURLQuery(trade):
     return (
         'https://news.google.com/search?q={}&hl=en-US&gl=US&ceid=US%3Aen'.format(
@@ -101,38 +98,37 @@ def cleanNewsURLQuery(trade):
             )
         )
 
-def getArticleTextFromUrl(url):
-    soup = getHTML(url)
-    articles = soup.find_all('article')
-    return str(articles)
-
-def findNOccurrence(str, sub, n):
-    val = -1
-    for i in range(0,n):
-        val = str.find(sub, val + 1)
-    return val
-
-def getNewsUrlsTitles(full_article_string):
-    list_of_urls_titles = []
-    list_of_articles = full_article_string.split('</article>')
-    i = 0
-    for a in list_of_articles[:-1]:
-        if i > 2:
+def getArticles(news_url):
+    r = fetchSession(news_url)
+    page = r.html.find('main')
+    conatiner = page[0].find('c-wiz')
+    body = conatiner[0].find('div')[0]
+    article_shells = body.find('div')[1:]
+    articles = []
+    for i in range(0,len(article_shells),11):
+        articles.append(article_shells[i])
+        if len(articles) == 3:
             break
-        start_ind = findNOccurrence(
-            a, 'href', 2
-        )
-        slice = a[start_ind:]
-        url = slice[slice.find('articles'):slice.find('">')]
-        title = slice[slice.find('>'):slice.find('<')][1:]
-        list_of_urls_titles.append(
+    all_articles = []
+    for a in articles:
+        try:
+            super_title = a.find('h3')[0]
+        # if no articles could be found (len(supertitle) = 0)
+        except IndexError:
+            return -1
+        link_html = super_title.find('a')
+        title = super_title.text
+        link = (
+            str(link_html[0]).split("href='.")[1]
+        ).split("'")[0]
+        link = 'https://news.google.com{}'.format(link)
+        all_articles.append(
             {
-                'title':title,
-                'url':'news.google.com/{}'.format(url)
+                'title' : title,
+                'url' : link
             }
         )
-        i += 1
-    return list_of_urls_titles
+    return all_articles
 
 def writeTradeToFile(trade, path):
     with open(path, 'w') as f:
@@ -223,23 +219,34 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
         value = value_to_ints(l2_elements[1].text)
         
         ticker = getTicker(trade)
-        # move on if ticker is invalid
+        # if no ticker is found, not an equity trade
         if ticker == '':
             continue
+        
+        left_table, right_table = getYahooInfo(ticker)
+        # invalid ticker given 
+        if left_table == -1:
+            continue
+        # if the ticker is an ETF, not a stock, or an options play
+        if not isStock(right_table) or 'Option' in trade:
+            continue
 
-        row_one = getFirstRowEntry(ticker)
-        mkt_cap = getNAVCAP(row_one)
+        mkt_cap = getMktCap(right_table)
+        try:
+            mkt_cap = parseToMillions(mkt_cap)
+        except IndexError:
+            continue
         small_mktCap = mkt_cap < 2000 and mkt_cap > 0
         medium_mktCap = mkt_cap >= 2000 and mkt_cap <= 10000
         large_mktCap = mkt_cap > 10000
         # any small caps, medium purchase medium caps, large purchase large cap
-        if isStock(row_one) and small_mktCap:
+        if small_mktCap:
             imp_trade = True
             cap_string = 'small'
-        elif isStock(row_one) and medium_mktCap and value[0] >= 50000:
+        elif medium_mktCap and value[0] >= 50000:
             imp_trade = True
             cap_string = 'medium'
-        elif isStock(row_one) and large_mktCap and value[0] >= 100000:
+        elif large_mktCap and value[0] >= 100000:
             imp_trade = True
             cap_string = 'large'
 
@@ -255,7 +262,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
                 'mkt cap' : cap_string,
                 'yahoo finance' : url
             }
-            # add ticker and trade date to master list
+            # add ticker and trade date to master list for tracking
             path = 'C:\\Users\\ander\\OneDrive\\Desktop\\Coding\\Senate_Trades\\res\\trade_info\\master_list_of_trades.txt'
             with open(path, 'a') as f:
                 f.write('%s\t%s\n' % (
@@ -293,15 +300,11 @@ def formatForEmail(trades_list):
         else:
             mkt_cap_string = 'Large Cap (Over $10B)'
 
-        list_of_titles_urls = getNewsUrlsTitles(
-            getArticleTextFromUrl(
-                cleanNewsURLQuery(
-                    t['trade']
-                )
-            )
+        list_of_titles_urls = getArticles(
+            cleanNewsURLQuery(t['trade'])
         )
 
-        if len(list_of_titles_urls) > 1:
+        if len(list_of_titles_urls) != 1:
             trades_for_txt.append(
                 {
                     'Trade Date' : trade_date,
