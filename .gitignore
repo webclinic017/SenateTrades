@@ -2,8 +2,8 @@
 __pycache__
 
 mail_info
-legacy
 emails
+legacy
 test
 
 SendUpdates_Single.py
