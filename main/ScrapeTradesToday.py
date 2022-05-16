@@ -1,6 +1,7 @@
 # current version in batch file
 
 from requests_html import HTMLSession
+from bs4 import BeautifulSoup
 from datetime import datetime,timedelta
 import smtplib, ssl
 from email.mime.text import MIMEText
@@ -84,6 +85,19 @@ def getMktCap(right_table):
 def getOpen(left_table):
     return left_table['Open']
 
+def getSectorIndustry(ticker):
+    url = 'https://finance.yahoo.com/quote/{}/profile?p={}'.format(ticker, ticker)
+    r = fetchSession(url)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    sect_ind = (
+        (
+            soup.find_all('p', attrs={'class' : 'D(ib) Va(t)'})
+        )[0].text.strip()
+    )
+    sector = re.search('\xa0(.*)Industry', sect_ind).group(1)
+    industry = re.search('Industry:\xa0(.*)Full', sect_ind).group(1)
+    return sector, industry
+
 def parseToMillions(value_string):
     unit = value_string[-1:]
     number = nums_from_string.get_nums(value_string)[0]
@@ -161,6 +175,8 @@ def getHTMLNews(t):
                 trade = t['Equity'],
                 value = t['Trade Value'],
                 mkt_cap = t['Market Cap'],
+                sect = t['Sector'],
+                ind  = t['Industry'],
                 news_url1 = t['URL1'],
                 news_title1 = t['Title 1'],
                 news_url2 = t['URL2'],
@@ -179,7 +195,9 @@ def getHTMLNoNews(t):
                 senator = t['Senator'],
                 trade = t['Equity'],
                 value = t['Trade Value'],
-                mkt_cap = t['Market Cap']
+                mkt_cap = t['Market Cap'],
+                sect = t['Sector'],
+                ind  = t['Industry']
             )
 
 def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backtest=False, backtestDate='2022-04-01'):
@@ -234,6 +252,7 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
         if not isStock(right_table) or 'Option' in trade:
             continue
 
+        sect, ind = getSectorIndustry(ticker)
         open_price = getOpen(left_table)
         mkt_cap = getMktCap(right_table)
         try:
@@ -264,6 +283,8 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
                 'trade type' : trade_type,
                 'value' : value,
                 'mkt cap' : cap_string,
+                'sector' : sect,
+                'industry' : ind,
                 'yahoo finance' : url
             }
             # add ticker and trade date to master list for tracking
@@ -317,6 +338,8 @@ def formatForEmail(trades_list):
                     'Equity' : t['trade'],
                     'Trade Value' : value_string,
                     'Market Cap' : mkt_cap_string,
+                    'Sector' : t['sector'],
+                    'Industry' : t['industry'],
                     'Yahoo!' : t['yahoo finance'],
                     'Title 1' : list_of_titles_urls[0]['title'], 
                     'Title 2' : list_of_titles_urls[1]['title'],  
@@ -335,6 +358,8 @@ def formatForEmail(trades_list):
                     'Equity' : t['trade'],
                     'Trade Value' : value_string,
                     'Market Cap' : mkt_cap_string,
+                    'Sector' : t['sector'],
+                    'Industry' : t['industry'],
                     'Yahoo!' : t['yahoo finance']
                 }
             )
@@ -377,7 +402,7 @@ def sendEmails(trades, toList = False):
             message['Bcc'] = ''
 
             body = MIMEText(data, 'plain')
-            if len(t) == 13:
+            if len(t) == 15:
                 html_string = getHTMLNews(t)
             # no news bullets 
             else:
