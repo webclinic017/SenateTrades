@@ -11,6 +11,7 @@
 - Equity description
 - Trade value
 - Market cap
+- Sector and Industry
 
 In addition, I also feed the equity information to [Google News](https://news.google.com/topstories?hl=en-US&gl=US&ceid=US:en), retrieve the top 3 most recent/relevant articles, and send those to the user under the main content. The ticker in the body header also contains a link to the equity's [Yahoo Finance](https://finance.yahoo.com/) description page. Here's an example of an alert email:
 
