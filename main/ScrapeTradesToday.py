@@ -89,11 +89,15 @@ def getSectorIndustry(ticker):
     url = 'https://finance.yahoo.com/quote/{}/profile?p={}'.format(ticker, ticker)
     r = fetchSession(url)
     soup = BeautifulSoup(r.text, 'html.parser')
-    sect_ind = (
-        (
-            soup.find_all('p', attrs={'class' : 'D(ib) Va(t)'})
-        )[0].text.strip()
-    )
+    try:
+        sect_ind = (
+            (
+                soup.find_all('p', attrs={'class' : 'D(ib) Va(t)'})
+            )[0].text.strip()
+        )
+    # bad ticker was given 
+    except IndexError:
+        return ''
     sector = re.search('\xa0(.*)Industry', sect_ind).group(1)
     industry = re.search('Industry:\xa0(.*)Full', sect_ind).group(1)
     return sector, industry
