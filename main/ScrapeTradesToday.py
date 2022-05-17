@@ -247,6 +247,10 @@ def scrapeImportantTrades(today=datetime.today().date(), onlyToday=False, backte
         # if no ticker is found, not an equity trade
         if ticker == '':
             continue
+
+        # handle case of finding company debt 
+        if ('Notes' or 'Matures') in trade:
+            continue
         
         left_table, right_table = getYahooInfo(ticker)
         # invalid ticker given 
