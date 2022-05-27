@@ -5,6 +5,7 @@ mail_info
 emails
 legacy
 test
+twitter
 
 SendUpdates_Single.py
 SendUpdates_ToList.py
