@@ -17,8 +17,6 @@ In addition, I also feed the equity information to [Google News](https://news.go
 
 ![](/res/repo_pics/sample_alert.JPG)
 
-<i>Note that there are actually not 38 days between the trade and file date. This is calcuated as the difference between the run date and trade date. Since this screen grab was from testing, this counter is wrong as it assumes the current date and filing date are the same.</i>
-
 The program is run via a [batch file](/tools/run_trades.bat) two times on a daily basis, on market close and market open, to keep me updated on any potential trades that may be worth researching more. I made this as a side project while studying at Lehigh University, and I hope you find it interesting!
 
 <b> If you are interested in being added to the email list, or have any other questions, please email:
