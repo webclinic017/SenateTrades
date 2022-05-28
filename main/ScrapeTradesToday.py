@@ -11,6 +11,7 @@ import re
 import nums_from_string
 import json
 from email.utils import formataddr 
+import tweepy
 
 def fetchSession(url):
     session = HTMLSession()
@@ -428,16 +429,73 @@ def sendEmails(trades, toList = False):
                     send_email, recipients, message.as_string()
                 )
 
+def formatForTwitter(trades_list):
+    trades_for_twitter = []
+    for t in trades_list:
+        value_string = '$' + (
+            "{:,}".format(t['value'][0])
+        ) + ' to $' + (
+            "{:,}".format(t['value'][1])
+        )
+        ticker = getTicker(t['trade'])
+        yahoo_link = 'https://finance.yahoo.com/quote/{}'.format(ticker)
+        trades_for_twitter.append(
+            {
+                'Ticker' : ticker,
+                'Senator' : t['senator'],
+                'Value' : value_string,
+                'yahoo' : yahoo_link,
+            }
+        )
+    return trades_for_twitter
+
+def writeTradeToFileTwitter(trade, path):
+    with open(path, 'w') as f:
+        for (key,item) in trade.items():
+            if key == 'yahoo':
+                f.write(
+                    '%s' % (item)
+                )
+                continue
+            f.write(
+                '%s : %s\n' % (
+                key,item
+                )
+            )
+
+def tweetTrades(trades_list, write_path, keys_path):
+    trades_for_twitter = formatForTwitter(trades_list)
+    with open(keys_path) as f:
+        keys = json.load(f)
+    client = tweepy.Client(
+        bearer_token=keys['bearer_token'],
+        consumer_key=keys['api_key'],
+        consumer_secret=keys['api_key_secret'],
+        access_token=keys['access_token'],
+        access_token_secret=keys['access_token_secret']
+    )
+    for t in trades_for_twitter:
+        writeTradeToFileTwitter(t, write_path)
+        with open(write_path, 'r') as f:
+            tweet_data = f.read()
+        client.create_tweet(text=tweet_data)
+
 def main():
 
     onlyToday = True
     backtest = False
     toList = True
     backtestDate = '2022-04-01'
+    twitter_write_path = '..\\res\\twitter\\write_for_twitter.txt'
+    twitter_keys_path = '..\\res\\twitter\\keys.json'
 
     trades = scrapeImportantTrades(onlyToday=onlyToday, backtest=backtest, backtestDate=backtestDate)
     trades_for_mail = formatForEmail(trades)
     sendEmails(trades=trades_for_mail, toList=toList)
+    tweetTrades(
+        trades_list=trades, write_path=twitter_write_path, 
+        keys_path= twitter_keys_path
+    )
 
 if __name__ == '__main__':
     main()
