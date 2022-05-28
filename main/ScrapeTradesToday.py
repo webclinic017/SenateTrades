@@ -1,5 +1,4 @@
 # current version in batch file
-
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 from datetime import datetime,timedelta
