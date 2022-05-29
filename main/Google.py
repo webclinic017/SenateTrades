@@ -19,7 +19,6 @@ def Create_Service(client_secret_file, api_name, api_version, *scopes, prefix=''
 	
 	cred = None
 	working_dir = os.getcwd()
-    # change dir 
 	token_dir = '..\\res\\gmail\\token files'
 	pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}{prefix}.pickle'
 
