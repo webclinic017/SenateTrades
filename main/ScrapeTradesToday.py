@@ -401,6 +401,7 @@ def sendEmails(trades, toList, testList):
     else:
         recipients = [send_email]
 
+    recipients = ', '.join(recipients)
     for t in trades:
         html_write_path = '..\\res\\html\\alert_formatting\\trade_for_html.txt'
         writeTradeToFile(t, html_write_path)
@@ -413,8 +414,8 @@ def sendEmails(trades, toList, testList):
             message = MIMEMultipart('alternative')
             message['Subject'] = 'Trade Alert'
             message['From'] = formataddr(('SenateTrades', send_email))
-            message['To'] = ', '.join(recipients)
-            message['Bcc'] = ''
+            message['To'] = send_email
+            message['Bcc'] = recipients
 
             body = MIMEText(data, 'plain')
             if len(t) == 15:
