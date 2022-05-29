@@ -2,7 +2,6 @@
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 from datetime import datetime,timedelta
-import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import sys
@@ -11,6 +10,8 @@ import nums_from_string
 import json
 from email.utils import formataddr 
 import tweepy
+from Google import Create_Service
+import base64
 
 def fetchSession(url):
     session = HTMLSession()
@@ -374,19 +375,25 @@ def formatForEmail(trades_list):
 
     return trades_for_txt
 
-def sendEmails(trades, toList = False):
-    port = 465
-    # login info
-    acct_path = '..\\res\\mail_info\\account_info.txt'
-    with open(acct_path, 'r') as f:
-        lines = f.readlines()
-        send_email = lines[0]
-        password = lines[1]
+def sendEmails(trades, toList, testList):
 
-    # get list of emails from text file in data folder 
+    CLIENT_SECRET_FILE = '..\\res\\gmail\\client.json'
+    API_NAME = 'gmail'
+    API_VERSION = 'v1'
+    SCOPES = ['https://mail.google.com/']
+
+    service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
+    send_email = 'ders.mailbot@gmail.com'
     recipients = []
+    # code to send trades to list of recipient emails 
     if toList:
         list_path = '..\\res\\mail_info\\mailing_list.txt'
+        with open(list_path,'r') as f:
+            lines = f.readlines()
+        for l in lines:
+            recipients.append(l.strip())
+    elif testList:
+        list_path = '..\\res\\mail_info\\mailing_list_test.txt'
         with open(list_path,'r') as f:
             lines = f.readlines()
         for l in lines:
@@ -406,7 +413,7 @@ def sendEmails(trades, toList = False):
             message = MIMEMultipart('alternative')
             message['Subject'] = 'Trade Alert'
             message['From'] = formataddr(('SenateTrades', send_email))
-            message['To'] = ', '.join(recipients) # change post testing
+            message['To'] = ', '.join(recipients)
             message['Bcc'] = ''
 
             body = MIMEText(data, 'plain')
@@ -420,13 +427,8 @@ def sendEmails(trades, toList = False):
 
             message.attach(body)
             message.attach(formatting)
-
-            context = ssl.create_default_context()
-            with smtplib.SMTP_SSL('smtp.gmail.com', port, context=context) as server:
-                server.login(send_email, password)
-                server.sendmail(
-                    send_email, recipients, message.as_string()
-                )
+            raw_string = base64.urlsafe_b64encode(message.as_bytes()).decode()
+            message = service.users().messages().send(userId='me', body={'raw':raw_string}).execute()
 
 def formatForTwitter(trades_list):
     trades_for_twitter = []
@@ -484,13 +486,16 @@ def main():
     onlyToday = True
     backtest = False
     toList = True
-    backtestDate = '2022-04-01'
+    testList = False
+    backtestDate = '2022-05-01'
     twitter_write_path = '..\\res\\twitter\\write_for_twitter.txt'
     twitter_keys_path = '..\\res\\twitter\\keys.json'
 
     trades = scrapeImportantTrades(onlyToday=onlyToday, backtest=backtest, backtestDate=backtestDate)
     trades_for_mail = formatForEmail(trades)
-    sendEmails(trades=trades_for_mail, toList=toList)
+    sendEmails(
+        trades=trades_for_mail, toList=toList, testList=testList
+    )
     tweetTrades(
         trades_list=trades, write_path=twitter_write_path, 
         keys_path= twitter_keys_path
