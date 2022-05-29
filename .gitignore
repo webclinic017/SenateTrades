@@ -6,6 +6,7 @@ emails
 legacy
 test
 twitter
+gmail
 
 SendUpdates_Single.py
 SendUpdates_ToList.py
