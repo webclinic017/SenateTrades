@@ -8,8 +8,7 @@ test
 twitter
 gmail
 
-SendUpdates_Single.py
-SendUpdates_ToList.py
+SendUpdates.py
 trade_for_html.txt
 run_backtest.bat
 email_logo.JPG
